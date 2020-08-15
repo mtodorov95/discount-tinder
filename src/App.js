@@ -4,17 +4,19 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Header from './components/Header';
 import TinderCards from './components/TinderCards';
 import SwipeButtons from './components/SwipeButtons';
+import Chats from './components/Chats';
 
 function App() {
   return (
     <div className="App">
-      <Header/>
       <Router>
         <Switch>
-          <Route path="/chat">
-            
+          <Route path="/chats">
+          <Header backButton="/"/>
+            <Chats/>
           </Route>
           <Route path="/">
+            <Header/>
             <TinderCards/>
             <SwipeButtons/>
           </Route>
