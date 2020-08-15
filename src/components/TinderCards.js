@@ -1,20 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import TinderCard from "react-tinder-card";
-import './TinderCards.css'
+import database from '../firebase';
+import './TinderCards.css';
 
 
 function TinderCards(props){
 
-    const [people, setPeople] = useState([
-        {
-            name: "steve jobs",
-            url: "https://upload.wikimedia.org/wikipedia/commons/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg"
-        },
-        {
-            name: "mark",
-            url: "https://api.time.com/wp-content/uploads/2019/04/mark-zuckerberg-time-100-2019.jpg?quality=85&zoom=2"
+    const [people, setPeople] = useState([]);
+
+    useEffect(() => {
+        const unsubscribe = database
+        .collection('people')
+        .onSnapshot(snapshot => {
+            setPeople(snapshot.docs.map(doc => doc.data()));
+        });
+
+        return () => {
+            unsubscribe();
         }
-    ]);
+    }, []);
 
 
     return (
